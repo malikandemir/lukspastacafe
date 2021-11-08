@@ -2,6 +2,8 @@
 
 Sayfalar
 * Kategoriler
+* Ürün Listele
+* Ürün detay
 * Hakkımızda
 * İletişim
 * Giriş Yap
