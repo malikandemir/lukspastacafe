@@ -1,6 +1,7 @@
 # lukspastacafe
 
 Sayfalar
+* Kategoriler
 * Hakkımızda
 * İletişim
 * Giriş Yap
