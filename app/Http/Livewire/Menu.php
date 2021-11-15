@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class CategoryList extends Component
+class Menu extends Component
 {
     public $categories = [
         ["id"=>1,"name"=>"Pasta Çeşitleri","class"=>"row-start-1 col-start-1 col-span-2","img"=>"pasta.jpg"],
@@ -17,6 +17,6 @@ class CategoryList extends Component
     ];
     public function render()
     {
-        return view('livewire.category-list');
+        return view('livewire.menu');
     }
 }
