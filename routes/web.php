@@ -14,14 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
-    Route::get('/productlist', function () { return view('productlist');})->name('productlist');
-    Route::get('/menu', function () { return view('menu');})->name('menu');
+Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
+Route::resource('/productlist', \App\Http\Controllers\ProductListController::class,[
+    'names' => [
+        'index' => 'productlist'
+    ]
+] );
+Route::get('/menu', function () { return view('menu');})->name('menu');
 
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('/category', \App\Http\Controllers\CategoryController::class);
+    Route::resource('/product', \App\Http\Controllers\ProductController::class);
+    Route::resource('/carousel', \App\Http\Controllers\CarouselController::class);
 });
 

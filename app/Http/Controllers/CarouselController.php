@@ -58,8 +58,7 @@ class CarouselController extends Controller
             $name = $img_name;
             $destinationPath = public_path('storage/img/');
             $t = $image->move($destinationPath, $name);
-
-            return back()->with('success','Image Upload successfully');
+//            return back()->with('success','Image Upload successfully');
         }
     }
 
@@ -94,12 +93,12 @@ class CarouselController extends Controller
      */
     public function update(Request $request, Carousel $carousel)
     {
-
         $carousel->name = $request->name;
         $carousel->description = $request->description;
         $carousel->img = "carousel_".$request->name."_".$carousel->id.".jpg";
         $carousel->update();
         $this->fileUpload($request,$carousel->img);
+
         $carousels = Carousel::all();
         return view('admin.carousel.index',compact('carousels'));
     }

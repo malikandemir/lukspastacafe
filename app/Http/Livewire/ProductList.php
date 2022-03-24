@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire;
 
+
 use Livewire\Component;
+use App\Models\Product;
 
 class ProductList extends Component
 {
-    public $products = [
-        ["category_id"=>"1","name"=>"Dilim Pasta","description"=>"col-span-2 row-span-2","img"=>"pasta.jpg"],
-        ["category_id"=>"1","name"=>"Dilim Pasta","description"=>"col-span-2 row-span-2","img"=>"pasta.jpg"],
-        ["category_id"=>"1","name"=>"Dilim Pasta","description"=>"col-span-2 row-span-2","img"=>"pasta.jpg"],
-        ["category_id"=>"1","name"=>"Dilim Pasta","description"=>"col-span-2 row-span-2","img"=>"pasta.jpg"],
-    ];
+    public $products;
+
+    public function __construct()
+    {
+//        dd($request->all());
+        $this->products = Product::whereStatus(1)->get();
+    }
 
     public function render()
     {

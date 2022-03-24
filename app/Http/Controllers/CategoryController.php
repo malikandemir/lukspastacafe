@@ -12,6 +12,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $categories = Category::all();
@@ -39,6 +40,27 @@ class CategoryController extends Controller
         $category = new Category();
         $category->forceFill($request->except(['_token']));
         $category->save();
+        $img_name = "category_".$request->name."_".$category->id;
+        $category->img = $img_name;
+        $category->save();
+        $this->fileUpload($request,$img_name);
+        $categories = Category::all();
+        return view('admin.category.index',compact('categories'));
+    }
+
+    public function fileUpload(Request $request,$img_name) {
+        $this->validate($request, [
+            'img' => 'required|image|mimes:jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $name = $img_name;
+            $destinationPath = public_path('storage/img/');
+            $t = $image->move($destinationPath, $name);
+
+            return back()->with('success','Image Upload successfully');
+        }
     }
 
     /**
@@ -60,8 +82,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $category = Category::find($category);
-        return view('adamin.category.edit',[$category]);
+        return view('admin.category.edit',compact('category'));
     }
 
     /**
@@ -73,7 +94,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        dd($request);
+        if($request->has('status'))
+        {
+            $category->status = $request->status;
+        }else {
+            $category->name = $request->name;
+            $category->description = $request->description;
+            $category->img = "category_" . $request->name . "_" . $category->id . ".jpg";
+            $this->fileUpload($request,$category->img);
+        }
+        $category->update();
+        $categories = Category::all();
+        return view('admin.category.index',compact('categories'));
     }
 
     /**

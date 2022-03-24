@@ -6,18 +6,28 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductListController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        $products = Product::all();
-        return view('admin.product.index',compact('products','categories'));
+        $category = [];
+
+        $products = Product::query();
+        if($request->has("cat_id"))
+        {
+            $category = Category::find($request->cat_id);
+            $products->whereCategoryId($request->cat_id);
+        }else{
+            $category = ["name"=>"Ürün Listesi"];
+            $category = (object)$category;
+        }
+        $products = $products->get();
+        return view('productlist',compact('products','category'));
     }
 
     /**
