@@ -9,11 +9,11 @@ Admin can login following link and manage the products on the page
 # Used Technogies 
 ### Backend
 - Laravel
+- Livewire
 - MySql
 
 ### Frontend
 - Tailwindcss
-- Livewire
 - Javascript
 
 Online Project
